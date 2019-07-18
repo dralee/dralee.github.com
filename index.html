@@ -152,6 +152,81 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-H5支付之坑" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/18/H5支付之坑/">H5支付之坑</a>
+    </h1>
+  
+
+        
+        <a href="/2019/07/18/H5支付之坑/" class="archive-article-date">
+  	<time datetime="2019-07-18T01:57:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 微信支付，返回的message为MWEB_URL</span></span><br><span class="line">axios.post(<span class="string">'/payment/wxpay/'</span> + rom.pkId + <span class="string">'/'</span> + rom.romId, &#123;&#125;)</span><br><span class="line">    .then(<span class="function"><span class="keyword">function</span> (<span class="params">response</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> data = response.data;</span><br><span class="line">    <span class="built_in">console</span>.log(data);</span><br><span class="line">    <span class="keyword">if</span> (data.isOk) &#123;</span><br><span class="line">        that.isShowPaying = <span class="literal">true</span>;</span><br><span class="line">        that.queryOrder();</span><br><span class="line">        that.orderNumber = data.data.orderNumber;</span><br><span class="line">        location.href = data.message;</span><br><span class="line">        <span class="comment">//openurl(data.message); // 不行，有些浏览器依然不可以, window.open() 更不可以，华为浏览器即使允许弹框，也会出现"商家存在未配置的参数，请联系商家解决"</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        alert(data.message);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">    .catch(<span class="function"><span class="keyword">function</span>(<span class="params">error</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(error);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">openurl</span>(<span class="params">url</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//创建A标签</span></span><br><span class="line">    <span class="keyword">var</span> a = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>);</span><br><span class="line">    <span class="comment">//给创建好的a标签赋值</span></span><br><span class="line">    a.setAttribute(<span class="string">'href'</span>, url);</span><br><span class="line">    <span class="comment">//设置css 隐藏属性</span></span><br><span class="line">    a.setAttribute(<span class="string">'style'</span>, <span class="string">'display:none'</span>);</span><br><span class="line">    <span class="comment">//设置 a标签为新窗口打开</span></span><br><span class="line">    a.setAttribute(<span class="string">'target'</span>, <span class="string">'_blank'</span>);</span><br><span class="line">    <span class="comment">//将设置好的a标签，添加到 body 内</span></span><br><span class="line">    <span class="built_in">document</span>.body.appendChild(a);</span><br><span class="line">    <span class="comment">//模拟点击</span></span><br><span class="line">    a.click();</span><br><span class="line">    <span class="comment">//移除a标签</span></span><br><span class="line">    a.parentNode.removeChild(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.支付宝支付 些种方式是，直接在当前页面中创建一个form，Id为payForm，然后将直接请求，后台直接返回支付宝接口返回的form内容</span></span><br><span class="line"><span class="keyword">var</span> action = <span class="string">'/payment/alipay/'</span> + rom.pkId + <span class="string">'/'</span> + rom.romId;</span><br><span class="line"><span class="keyword">var</span> form = $(<span class="string">'#payForm'</span>);</span><br><span class="line">form.attr(<span class="string">'action'</span>, action);</span><br><span class="line">form.attr(<span class="string">'method'</span>, <span class="string">'post'</span>);</span><br><span class="line">form.submit();</span><br><span class="line"><span class="comment">// vue3中以vue的方式处理，发现iphone5s不会弹出</span></span><br><span class="line"><span class="comment">// 支付宝</span></span><br><span class="line"><span class="keyword">const</span> url =</span><br><span class="line">      baseURL+<span class="string">"/api/pay/alipay?pkId="</span>+</span><br><span class="line">      <span class="keyword">this</span>.item.PkId +</span><br><span class="line">      <span class="string">"&amp;romId="</span> +</span><br><span class="line">      <span class="keyword">this</span>.item.RomId;</span><br><span class="line">axios(&#123;</span><br><span class="line">    method: <span class="string">"post"</span>,</span><br><span class="line">    url: url,</span><br><span class="line">    data: &#123;&#125;</span><br><span class="line">&#125;)</span><br><span class="line">    .then(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(res.data);</span><br><span class="line">    <span class="keyword">if</span> (res.data.Code == <span class="number">0</span>) &#123;</span><br><span class="line">        that.queryOrder(res.data.Data.OrderNumber);</span><br><span class="line">        <span class="keyword">let</span> routerData = <span class="keyword">this</span>.$router.resolve(&#123;</span><br><span class="line">            path: <span class="string">"/home/applyText"</span>,</span><br><span class="line">            query: &#123; <span class="attr">htmls</span>: res.data.Data.FormContent &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">this</span>.htmls = res.data.Data.FormContent;</span><br><span class="line">        <span class="built_in">window</span>.open(routerData.href, <span class="string">"_ blank"</span>);</span><br><span class="line">        <span class="keyword">const</span> div = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</span><br><span class="line">        div.innerHTML = htmls;</span><br><span class="line">        <span class="built_in">document</span>.body.appendChild(div);</span><br><span class="line">        <span class="built_in">document</span>.forms[<span class="number">0</span>].submit();</span><br><span class="line">        <span class="comment">// window.open(res.data.Data.WxPayUrl, "_blank");</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        alert(res.data.Message);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">    .catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>home/applyText如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div v-cloak v-html=&quot;apply&quot;&gt;</span><br><span class="line">        &#123;&#123;apply&#125;&#125;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">    name:&apos;applyText&apos;,</span><br><span class="line">    data()&#123;</span><br><span class="line">        return&#123;</span><br><span class="line">            apply:&apos;&apos;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    mounted()&#123;</span><br><span class="line">        let form = this.$route.query.htmls</span><br><span class="line">        this.apply = form;</span><br><span class="line">        this.$nextTick(()=&gt;&#123;</span><br><span class="line">            document.forms[0].submit()</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line"></span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Pay</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2019/07/18/H5支付之坑/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Hexo-搭建博客真方便" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -376,6 +451,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Pay</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
